@@ -1,0 +1,37 @@
+version: '2.3'
+x-environment: &x-environment
+  ORG_NAME: cmu-db
+  ACCESS_TOKEN: redacted
+  REPO_URL: "https://github.com/cmu-db/dbgym/"
+  RUNNER_WORKDIR: /data/runner/
+  DISABLE_AUTO_UPDATE: true
+  RUNNER_SCOPE: 'repo'
+  LABELS: linux,x64,gpu
+  EPHEMERAL: 1
+  ACTIONS_RUNNER_HOOK_JOB_COMPLETED: /data/runner/cleanup.sh
+x-worker: &x-worker
+  restart: unless-stopped
+  build:
+    context: ./github-action-runner
+  security_opt:
+    # needed on SELinux systems to allow docker container to manage other docker containers
+    - label:disable
+services:
+  worker-1:
+    <<: *x-worker
+    cpuset: 0-9
+    environment:
+      <<: *x-environment
+      RUNNER_NAME: dbgym-dev6-1
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/mnt/nvme0n1/github-runner/dbgym-runner1:/data/runner'
+  worker-2:
+    <<: *x-worker
+    cpuset: 0-9
+    environment:
+      <<: *x-environment
+      RUNNER_NAME: dbgym-dev6-2
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/mnt/nvme0n1/github-runner/dbgym-runner2:/data/runner'
