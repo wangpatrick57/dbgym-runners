@@ -4,7 +4,6 @@ x-environment: &x-environment
   ACCESS_TOKEN: ${ACCESS_TOKEN}
   REPO_URL: "https://github.com/cmu-db/dbgym/"
   RUNNER_WORKDIR: /data/runner/
-  DISABLE_AUTO_UPDATE: true
   RUNNER_SCOPE: 'repo'
   LABELS: linux,x64,gpu
   EPHEMERAL: 1
