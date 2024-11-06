@@ -1,7 +1,7 @@
 version: '2.3'
 x-environment: &x-environment
   ORG_NAME: cmu-db
-  ACCESS_TOKEN: redacted
+  ACCESS_TOKEN: ${ACCESS_TOKEN}
   REPO_URL: "https://github.com/cmu-db/dbgym/"
   RUNNER_WORKDIR: /data/runner/
   DISABLE_AUTO_UPDATE: true
