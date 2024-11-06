@@ -19,6 +19,7 @@ x-worker: &x-worker
 services:
   worker:
     <<: *x-worker
+    shm_size: "512m"
     cpuset: 0-9
     environment:
       <<: *x-environment
