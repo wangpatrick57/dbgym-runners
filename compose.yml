@@ -8,6 +8,7 @@ x-environment: &x-environment
   LABELS: linux,x64,gpu
   EPHEMERAL: 1
   ACTIONS_RUNNER_HOOK_JOB_COMPLETED: /data/runner/cleanup.sh
+  RUN_AS_ROOT: false
 x-worker: &x-worker
   restart: unless-stopped
   build:
