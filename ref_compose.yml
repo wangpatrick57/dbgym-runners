@@ -1,0 +1,56 @@
+# a reference compose.yml file from bustub-runner/
+version: '2.3'
+x-environment: &x-environment
+  ORG_NAME: cmu-db
+  ACCESS_TOKEN: redacted
+  RUNNER_WORKDIR: /data/runner/
+  DISABLE_AUTO_UPDATE: true
+  RUNNER_SCOPE: 'org'
+  LABELS: linux,x64,gpu
+  EPHEMERAL: 1
+  ACTIONS_RUNNER_HOOK_JOB_COMPLETED: /data/runner/cleanup.sh
+x-worker: &x-worker
+  restart: unless-stopped
+  build:
+    context: ./github-action-runner
+  security_opt:
+    # needed on SELinux systems to allow docker container to manage other docker containers
+    - label:disable
+services:
+  worker-1:
+    <<: *x-worker
+    cpuset: 0-9
+    environment:
+      <<: *x-environment
+      RUNNER_NAME: skyzh-dev6-1
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/mnt/nvme0n1/github-runner/runner1:/data/runner'
+  worker-2:
+    <<: *x-worker
+    cpuset: 10-19
+    environment:
+      <<: *x-environment
+      RUNNER_NAME: skyzh-dev6-2
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/mnt/nvme0n1/github-runner/runner2:/data/runner'
+  worker-3:
+    <<: *x-worker
+    cpuset: 20-29
+    environment:
+      <<: *x-environment
+      RUNNER_NAME: skyzh-dev6-3
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/mnt/nvme0n1/github-runner/runner3:/data/runner'
+  worker-4:
+    <<: *x-worker
+    cpuset: 30-39
+    environment:
+      <<: *x-environment
+      RUNNER_NAME: skyzh-dev6-4
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/mnt/nvme0n1/github-runner/runner4:/data/runner'
+
