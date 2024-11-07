@@ -23,7 +23,7 @@ services:
     cpuset: 40-49
     environment:
       <<: *x-environment
-      RUNNER_NAME: dbgym-dev6
+      RUNNER_NAME: dbgym-dev6-1
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - '/mnt/nvme0n1/github-runner/dbgym-runner1:/data/runner'
@@ -32,7 +32,7 @@ services:
     cpuset: 50-59
     environment:
       <<: *x-environment
-      RUNNER_NAME: dbgym-dev6
+      RUNNER_NAME: dbgym-dev6-2
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - '/mnt/nvme0n1/github-runner/dbgym-runner2:/data/runner'
