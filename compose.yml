@@ -16,14 +16,23 @@ x-worker: &x-worker
   security_opt:
     # needed on SELinux systems to allow docker container to manage other docker containers
     - label:disable
+  shm_size: "512m"
 services:
-  worker:
+  worker1:
     <<: *x-worker
-    shm_size: "512m"
-    cpuset: 0-9
+    cpuset: 40-49
     environment:
       <<: *x-environment
       RUNNER_NAME: dbgym-dev6
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
-      - '/mnt/nvme0n1/github-runner/dbgym-runner:/data/runner'
+      - '/mnt/nvme0n1/github-runner/dbgym-runner1:/data/runner'
+  worker2:
+    <<: *x-worker
+    cpuset: 50-59
+    environment:
+      <<: *x-environment
+      RUNNER_NAME: dbgym-dev6
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/mnt/nvme0n1/github-runner/dbgym-runner2:/data/runner'
